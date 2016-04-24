@@ -1,0 +1,25 @@
+# See http://help.github.com/ignore-files/ for more about ignoring files.
+
+# Composer
+/vendor/
+
+# Sqlite files
+*.sqlite*
+
+# Eclipse
+.buildpath
+.project
+.settings
+
+# VI
+*.swp
+
+# Ignore environment-variable files
+.env
+.env.development
+.env.production
+.env.staging
+.env.test
+
+# ignore all log files
+*.log:
