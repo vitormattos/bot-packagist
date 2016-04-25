@@ -65,7 +65,8 @@ if($update->has('inline_query')) {
     $telegram->answerInlineQuery([
         'inline_query_id' => $inlineQuery->getId(),
         'cache_time' => 0,
-        'results' => $results
+        'results' => $results,
+        'switch_pm_text' => '?????'
     ]);
 } else
 // Inline Keyboard
