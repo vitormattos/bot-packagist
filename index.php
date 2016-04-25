@@ -40,7 +40,7 @@ if($update->has('inline_query')) {
                         InlineQueryResultArticle::make([
                             'id' => 'no-query',
                             'title' => 'No results',
-                            'message_text' => 'texto',
+                            'message_text' => 'No results',
                             'description' =>
                                 'Sorry! I found nothing with your search term. Try again.'
                         ])
