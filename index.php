@@ -6,7 +6,6 @@ use TelegramPagerfanta\Adapter\PackagistAdapter;
 use Pagerfanta\Pagerfanta;
 use Base32\Base32;
 use Telegram\Bot\Objects\InlineQuery\InlineQueryResultArticle;
-use Telegram\Bot\Objects\InputContent\InputTextMessageContent;
 require_once 'vendor/autoload.php';
 require_once 'config.php';
 
@@ -54,21 +53,20 @@ if($update->has('inline_query')) {
             }
         }
     } else {
-        $results = [
-            InlineQueryResultArticle::make([
-                'id' => 'no-query',
-                'title' => 'Help',
-                'message_text' => 'message_text'
-            ])
-        ];
+        $params = [
+            'inline_query_id' => $inlineQuery->getId(),
+            'cache_time' => 0,
+            'results' => [
+                InlineQueryResultArticle::make([
+                    'id' => 'no-query',
+                    'title' => 'Help',
+                    'message_text' => 'message_text'
+                ]),
+            'switch_pm_text' => 'Type the query...',
+            'switch_pm_parameter' => 'inline help'
+        ]
     }
-    $telegram->answerInlineQuery([
-        'inline_query_id' => $inlineQuery->getId(),
-        'cache_time' => 0,
-        'results' => $results,
-        'switch_pm_text' => '?????',
-        'switch_pm_parameter' => 'parameter sended'
-    ]);
+    $telegram->answerInlineQuery($params);
 } else
 // Inline Keyboard
 if($update->has('message')) {
