@@ -40,17 +40,22 @@ class PackagistAdapter implements AdapterInterface
         return $text;
     }
     
-    public static function getPackageRow($result)
+    public static function getPackageRow($result, $inline)
     {
         if(strlen($result['description']) > 66) {
             $result['description'] = substr($result['description'], 0, 65) . '...';
         }
-        $encoded = rtrim(Base32::encode(gzdeflate($result['name'], 9)), '=');
-        $text.=
-            "\n\n".
-            "<b>{$result['name']}</b>\n".
-            ($result['description'] ? $result['description'] . "\n" : '').
-            "<i>View: </i>/v_".$encoded;
+        if($inline) {
+            $text =
+                '<b><a href="' . $result['url'] . '">'.$result['name']."</a></b>\n".
+                ($result['description'] ? $result['description'] . "\n" : '');
+        } else {
+            $text =
+                "\n\n".
+                "<b>{$result['name']}</b>\n".
+                ($result['description'] ? $result['description'] . "\n" : '').
+                '<i>View: </i>/v_' . rtrim(Base32::encode(gzdeflate($result['name'], 9)), '=');
+        }
         return $text;
     }
 }
