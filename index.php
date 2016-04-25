@@ -12,7 +12,7 @@ require_once 'config.php';
 if(getenv('MODE_ENV') == 'develop') {
     class mockApi extends Api{
         public function getWebhookUpdates() {
-            $json = '{"update_id":459421983,"inline_query":{"id":"162783458566233719","from":{"id":37900977,"first_name":"Vitor Mattos","last_name":"@Monergist","username":"VitorMattos"},"query":"","offset":""}}';
+            $json = '{"update_id":459422010,"inline_query":{"id":"162783457497189797","from":{"id":37900977,"first_name":"Vitor Mattos","last_name":"@Monergist","username":"VitorMattos"},"query":"phpuni","offset":""}}';
             return new Update(json_decode($json, true));
         }
     }
@@ -42,14 +42,18 @@ if($update->has('inline_query')) {
                 ])
             ];
         } else {
+            $params = [
+                'inline_query_id' => $inlineQuery->getId(),
+                'cache_time' => 0,
+                'switch_pm_text' => 'Type the query...',
+                'switch_pm_parameter' => 'inline help'
+            ];
             foreach($response['results'] as $result) {
-                $results = [
-                    InlineQueryResultArticle::make([
-                        'id' => 'no-query',
-                        'title' => $result['name'],
-                        'description' => 'descrição'
-                    ])
-                ];
+                $params['results'][] = InlineQueryResultArticle::make([
+                    'id' => 'no-query',
+                    'title' => $result['name'],
+                    'description' => 'descrição'
+                ]);
             }
         }
     } else {
