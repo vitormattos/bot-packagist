@@ -66,7 +66,8 @@ if($update->has('inline_query')) {
         'inline_query_id' => $inlineQuery->getId(),
         'cache_time' => 0,
         'results' => $results,
-        'switch_pm_text' => '?????'
+        'switch_pm_text' => '?????',
+        'switch_pm_parameter' => 'parameter sended'
     ]);
 } else
 // Inline Keyboard
