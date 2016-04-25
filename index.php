@@ -124,6 +124,14 @@ if($update->has('message')) {
                     'disable_web_page_preview' => true
                 ]);
                 break;
+            case (preg_match('/^\/start inline help/', $text) ? true : false):
+                $telegram->sendMessage([
+                    'chat_id' => $message->getChat()->getId(),
+                    'text' =>
+                        'For use inline query mode, type @olxbrbot in message box and type the text to search',
+                    'disable_web_page_preview' => true
+                ]);
+                break;
             case (preg_match('/^\//', $text) ? true : false):
                 $telegram->sendMessage([
                     'chat_id' => $message->getChat()->getId(),
