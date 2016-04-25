@@ -53,11 +53,18 @@ class PackagistAdapter implements AdapterInterface
         if(strlen($result['description']) > 66) {
             $result['description'] = substr($result['description'], 0, 65) . '...';
         }
-        $date = new \DateTime($result['time']);
+        $date = null;
+        if(array_key_exists('time', $result)) {
+            $date = new \DateTime($result['time']);
+        }
         $text =
             "<b>{$result['name']}</b>\n".
             ($result['description'] ? $result['description'] . "\n" : '').
-            '<i>Last update:</i> ' . $date->format('Y-m-d H:i:s')."\n".
+            ($date
+                ? '<i>Last update:</i> ' . $date->format('Y-m-d H:i:s')."\n"
+                : ''
+            ).
+            "<i>Downloads:</i> " . $result['downloads']."\n".
             "<i>Repository:</i> " . $result['repository']."\n".
             '<code>composer require '.$result['name'].'</code>';
         return $text;

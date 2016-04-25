@@ -6,6 +6,7 @@ use TelegramPagerfanta\Adapter\PackagistAdapter;
 use Pagerfanta\Pagerfanta;
 use Base32\Base32;
 use Telegram\Bot\Objects\InlineQuery\InlineQueryResultArticle;
+use function GuzzleHttp\json_decode;
 require_once 'vendor/autoload.php';
 require_once 'config.php';
 
@@ -54,14 +55,22 @@ if($update->has('inline_query')) {
             }
             foreach($response['results'] as $result) {
                 $encoded = rtrim(Base32::encode(gzdeflate($result['name'], 9)), '=');
-                $params['results'][] = InlineQueryResultArticle::make([
+                $items = [
                     'id' => substr($encoded, 0, 63),
                     'title' => $result['name'],
                     'message_text' => PackagistAdapter::showPackage($result),
                     'description' => ($result['description'] ? : ''),
                     'parse_mode' => 'HTML',
                     'disable_web_page_preview' => true
-                ]);
+                ];
+                if(preg_match('/github.com\/(?<login>.*)\//', $result['repository'], $githubUser)) {
+                    $githubUser = file_get_contents('https://api.github.com/users/'.$githubUser['login']);
+                    $githubUser = json_decode($githubUser, true);
+                    if($githubUser) {
+                        $items['thumb_url'] = $githubUser['avatar_url'];
+                    }
+                }
+                $params['results'][] = InlineQueryResultArticle::make($items);
             }
         }
     } else {
