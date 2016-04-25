@@ -13,7 +13,7 @@ require_once 'config.php';
 if(getenv('MODE_ENV') == 'develop') {
     class mockApi extends Api{
         public function getWebhookUpdates() {
-            $json = '{"update_id":459421968,"inline_query":{"id":"162783458833421624","from":{"id":37900977,"first_name":"Vitor Mattos","last_name":"@Monergist","username":"VitorMattos"},"query":"","offset":""}}';
+            $json = '{"update_id":459421983,"inline_query":{"id":"162783458566233719","from":{"id":37900977,"first_name":"Vitor Mattos","last_name":"@Monergist","username":"VitorMattos"},"query":"","offset":""}}';
             return new Update(json_decode($json, true));
         }
     }
@@ -62,13 +62,10 @@ if($update->has('inline_query')) {
             'inline_query_id' => $inlineQuery->getId(),
             'results' => [
                 InlineQueryResultArticle::make([
-                        'id' => 'no-query',
-                        'title' => 'Help',
-                        'input_message_content' => InputTextMessageContent::make([
-                            'message_text' => '/help'
-                        ])
-                    ]),
-                'switch_pm_text' => 'que isso?'
+                    'id' => 'no-query',
+                    'title' => 'Help',
+                    'message_text' => 'bla'
+                ])
             ]
         ];
     }
