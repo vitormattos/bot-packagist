@@ -60,6 +60,7 @@ if($update->has('inline_query')) {
     } else {
         $params = [
             'inline_query_id' => $inlineQuery->getId(),
+            'cache_time' => 0,
             'results' => [
                 InlineQueryResultArticle::make([
                     'id' => 'no-query',
