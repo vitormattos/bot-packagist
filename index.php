@@ -120,14 +120,14 @@ if($update->has('message')) {
     $callbackQuery = $update->getCallbackQuery();
     switch ($query = $callbackQuery->getData()) {
         case (preg_match('/\/p=(?<page>\d+)&q=(?<query>.+)/', $query, $matched) ? true : false):
+            $packagist_page = (int) ( ($matched['page'] * 3 - 1) / 15 ) + 1;
+            $response = file_get_contents('https://packagist.org/search.json?q=' . $matched['query'] . '&p=' . $packagist_page);
+            $response = json_decode($response, true);
+
             $adapter = new PackagistAdapter($response);
             $pagerfanta = new Pagerfanta($adapter);
             $pagerfanta->setMaxPerPage(3);
             $pagerfanta->setCurrentPage($matched['page']);
-
-            $packagist_page = (int) ( ($matched['page'] * $pagerfanta->getMaxPerPage() - 1) / 15 ) + 1;
-            $response = file_get_contents('https://packagist.org/search.json?q=' . $matched['query'] . '&p=' . $packagist_page);
-            $response = json_decode($response, true);
 
             $view = new TelegramInlineView();
             $text = $pagerfanta->getAdapter()->getPageContent($pagerfanta, $matched['query']);
