@@ -73,7 +73,7 @@ if($update->has('message')) {
                     'chat_id' => $message->getChat()->getId(),
                     'text' =>
                         "Bot created by @vitormattos\n".
-                        "Source in: https://github.com/vitormattos/bot-packagist",
+                        "Source in: github.com/vitormattos/bot-packagist",
                     'disable_web_page_preview' => true
                 ]);
                 break;
