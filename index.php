@@ -6,6 +6,7 @@ use TelegramPagerfanta\Adapter\PackagistAdapter;
 use Pagerfanta\Pagerfanta;
 use Base32\Base32;
 use Telegram\Bot\Objects\InlineQuery\InlineQueryResultArticle;
+use Telegram\Bot\Objects\InputContent\InputTextMessageContent;
 require_once 'vendor/autoload.php';
 require_once 'config.php';
 
@@ -62,7 +63,10 @@ if($update->has('inline_query')) {
             'results' => [
                 InlineQueryResultArticle::make([
                     'id' => 'no-query',
-                    'title' => 'Título'
+                    'title' => 'Help',
+                    'input_message_content' => InputTextMessageContent::make([
+                        'message_text' => '/help'
+                    ])
                 ])
             ]
         ];
