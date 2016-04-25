@@ -52,6 +52,7 @@ if($update->has('inline_query')) {
                 $params['results'][] = InlineQueryResultArticle::make([
                     'id' => 'no-query',
                     'title' => $result['name'],
+                    'message_text' => '\v_'.rtrim(Base32::encode(gzdeflate($result['name'], 9)), '='),
                     'description' => 'descrição'
                 ]);
             }
