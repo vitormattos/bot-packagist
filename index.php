@@ -66,7 +66,14 @@ if($update->has('inline_query')) {
                 ];
                 try {
                     if(preg_match('/github.com\/(?<login>.*)\//', $result['repository'], $githubUser)) {
-                        $githubUser = $client->get('https://api.github.com/users/'.$githubUser['login']);
+                        $githubUser = $client->get(
+                            'https://api.github.com/users/'.$githubUser['login'],
+                            [
+                                'headers' => [
+                                    'Authorization' => 'token '.$config['token_github']
+                                ]
+                            ]
+                        );
                         if($githubUser->getStatusCode() == 200) {
                             $githubUser = json_decode($githubUser->getBody(), true);
                             if($githubUser) {

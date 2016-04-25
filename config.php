@@ -1,5 +1,6 @@
 <?php
 $config = [
-    'token' => getenv('TOKEN')?:'fake'
+    'token' => getenv('TOKEN'),
+    'token_github' => getenv('OAUTH_TOKEN_GITHUB')
 ];
 return $config;
