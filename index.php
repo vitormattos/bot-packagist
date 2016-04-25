@@ -12,7 +12,7 @@ require_once 'config.php';
 if(getenv('MODE_ENV') == 'develop') {
     class mockApi extends Api{
         public function getWebhookUpdates() {
-            $json = '{"update_id":459422010,"inline_query":{"id":"162783457497189797","from":{"id":37900977,"first_name":"Vitor Mattos","last_name":"@Monergist","username":"VitorMattos"},"query":"phpuni","offset":""}}';
+            $json = '{"update_id":459422131,"inline_query":{"id":"162783457460083254","from":{"id":37900977,"first_name":"Vitor Mattos","last_name":"@Monergist","username":"VitorMattos"},"query":"phpunit","offset":"2"}}';
             return new Update(json_decode($json, true));
         }
     }
@@ -48,11 +48,16 @@ if($update->has('inline_query')) {
                     ]
                 ];
         } else {
-            preg_match('/&page=(?<page>\d+)/', $response['next'], $page);
+            if(array_key_exists('next', $response)) {
+                preg_match('/&page=(?<page>\d+)/', $response['next'], $next_offset);
+                $next_offset = $next_offset['page'];
+            } else {
+                $next_offset = '';
+            }
             $params = [
                 'inline_query_id' => $inlineQuery->getId(),
                 'cache_time' => 0,
-                'next_offset' => $page['page']?:''
+                'next_offset' => $next_offset
             ];
             foreach($response['results'] as $result) {
                 $encoded = rtrim(Base32::encode(gzdeflate($result['name'], 9)), '=');
