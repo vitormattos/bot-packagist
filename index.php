@@ -3,7 +3,6 @@ use Telegram\Bot\Api;
 use Telegram\Bot\Keyboard\Keyboard;
 use Telegram\Bot\Objects\Update;
 use TelegramPagerfanta\Adapter\PackagistAdapter;
-use TelegramPagerfanta\View\TelegramInlineView;
 use Pagerfanta\Pagerfanta;
 use Base32\Base32;
 require_once 'vendor/autoload.php';
@@ -129,7 +128,7 @@ if($update->has('message')) {
             $pagerfanta->setMaxPerPage(3);
             $pagerfanta->setCurrentPage($matched['page']);
 
-            $view = new TelegramInlineView();
+            $view = new \Pagerfanta\View\TelegramInlineView();
             $text = $pagerfanta->getAdapter()->getPageContent($pagerfanta, $matched['query']);
             $a = str_replace(':', '', strip_tags($text));
             $b = str_replace(':', '', $callbackQuery->getMessage()->getText());
