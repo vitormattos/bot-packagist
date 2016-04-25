@@ -465,12 +465,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/vitormattos/Pagerfanta.git",
-                "reference": "453c101f9e602434c6e2a8a3e20a0999f20e1aa9"
+                "reference": "f12b9728775973be5cbeb45820bbf233fa2c3afc"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/vitormattos/Pagerfanta/zipball/453c101f9e602434c6e2a8a3e20a0999f20e1aa9",
-                "reference": "453c101f9e602434c6e2a8a3e20a0999f20e1aa9",
+                "url": "https://api.github.com/repos/vitormattos/Pagerfanta/zipball/f12b9728775973be5cbeb45820bbf233fa2c3afc",
+                "reference": "f12b9728775973be5cbeb45820bbf233fa2c3afc",
                 "shasum": ""
             },
             "require": {
@@ -526,7 +526,7 @@
             "support": {
                 "source": "https://github.com/vitormattos/Pagerfanta/tree/master"
             },
-            "time": "2016-04-25 01:31:44"
+            "time": "2016-04-25 06:46:28"
         },
         {
             "name": "paragonie/random_compat",
