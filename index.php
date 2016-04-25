@@ -53,6 +53,7 @@ if($update->has('inline_query')) {
             } else {
                 $params['next_offset'] = '';
             }
+            $client = new GuzzleHttp\Client();
             foreach($response['results'] as $result) {
                 $encoded = rtrim(Base32::encode(gzdeflate($result['name'], 9)), '=');
                 $items = [
@@ -64,9 +65,9 @@ if($update->has('inline_query')) {
                     'disable_web_page_preview' => true
                 ];
                 if(preg_match('/github.com\/(?<login>.*)\//', $result['repository'], $githubUser)) {
-                    $githubUser = file_get_contents('https://api.github.com/users/'.$githubUser['login']);
-                    if($githubUser) {
-                        $githubUser = json_decode($githubUser, true);
+                    $githubUser = $client->get('https://api.github.com/users/'.$githubUser['login']);
+                    if($githubUser->getStatusCode() == 200) {
+                        $githubUser = json_decode($githubUser->getBody(), true);
                         if($githubUser) {
                             $items['thumb_url'] = $githubUser['avatar_url'];
                         }
