@@ -11,7 +11,7 @@ require_once 'config.php';
 if(getenv('MODE_ENV') == 'develop') {
     class mockApi extends Api{
         public function getWebhookUpdates() {
-            $json = '{}';
+            $json = '{"update_id":459421964,"inline_query":{"id":"162783456769616464","from":{"id":37900977,"first_name":"Vitor Mattos","last_name":"@Monergist","username":"VitorMattos"},"query":"phpunit","offset":""}}';
             return new Update(json_decode($json, true));
         }
     }
@@ -23,6 +23,54 @@ if(getenv('MODE_ENV') == 'develop') {
 
 $update = $telegram->getWebhookUpdates();
 
+
+// Inline Query
+if($update->has('inline_query')) {
+    $inlineQuery = $update->getInlineQuery();
+    if($query = $inlineQuery->getQuery()) {
+        $response = file_get_contents('https://packagist.org/search.json?q='.$query);
+        $response = json_decode($response, true);
+        if($response['total'] == 0) {
+            $params = [
+                InlineQueryResultArticle::make([
+                    'id' => 'no-query',
+                    'title' => 'No results',
+                    'message_text' => 'texto',
+                    'description' =>
+                        'Sorry! I found nothing with your search term. Try again.'
+                ])
+            ];
+        } else {
+            foreach($response['results'] as $result) {
+                $params = [
+                    InlineQueryResultArticle::make([
+                        'id' => 'no-query',
+                        'title' => $result['name'],
+                        'message_text' => 'texto',
+                        'description' => 'descrição'
+                    ])
+                ];
+            }
+        }
+        $params = [
+            'inline_query_id' => $inlineQuery->getId(),
+            'results' => $params
+        ];
+    } else {
+        $params = [
+            'inline_query_id' => $inlineQuery->getId(),
+            'results' => [
+                InlineQueryResultArticle::make([
+                    'id' => 'no-query',
+                    'title' => 'Título',
+                    'message_text' => 'texto',
+                    'description' => 'descrição'
+                ])
+            ]
+        ];
+    }
+    $telegram->answerInlineQuery($params);
+} else
 // Inline Keyboard
 if($update->has('message')) {
     $message = $update->getMessage();
