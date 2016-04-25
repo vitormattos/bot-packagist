@@ -47,8 +47,9 @@ class PackagistAdapter implements AdapterInterface
         }
         if($inline) {
             $text =
-                '<b><a href="' . $result['url'] . '">'.$result['name']."</a></b>\n".
-                ($result['description'] ? $result['description'] . "\n" : '');
+                '<b>' . $result['name'] . "</b>\n".
+                ($result['description'] ? $result['description'] . "\n" : '').
+                'View: <a href="' . $result['url'] . '">'.$result['name'].'</a>';
         } else {
             $text =
                 "\n\n".
