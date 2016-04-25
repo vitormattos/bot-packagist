@@ -36,7 +36,7 @@ class PackagistAdapter implements AdapterInterface
         $text = "<b>Showing results for '$query'</b>";
         foreach($results as $result) {
             if(strlen($result['description']) > 66) {
-                $result['description'] = substr($result['description'], 1, 66) . '...';
+                $result['description'] = substr($result['description'], 0, 65) . '...';
             }
             $encoded = rtrim(Base32::encode(gzdeflate($result['name'], 9)), '=');
             $text.=
