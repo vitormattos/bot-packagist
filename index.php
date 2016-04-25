@@ -13,7 +13,7 @@ require_once 'config.php';
 if(getenv('MODE_ENV') == 'develop') {
     class mockApi extends Api{
         public function getWebhookUpdates() {
-            $json = '{"update_id":459422173,"message":{"message_id":292,"from":{"id":37900977,"first_name":"Vitor Mattos","last_name":"@Monergist","username":"VitorMattos"},"chat":{"id":37900977,"first_name":"Vitor Mattos","last_name":"@Monergist","username":"VitorMattos","type":"private"},"date":1461588316,"text":"\/v_FPECQKGNZMWNCL6IFDIC3SOPJ3G5GLJOFFFE3TAFAA","entities":[{"type":"bot_command","offset":0,"length":45}]}}';
+            $json = '{"update_id":459422206,"message":{"message_id":307,"from":{"id":37900977,"first_name":"Vitor Mattos","last_name":"@Monergist","username":"VitorMattos"},"chat":{"id":37900977,"first_name":"Vitor Mattos","last_name":"@Monergist","username":"VitorMattos","type":"private"},"date":1461596924,"text":"phpunit"}}';
             return new Update(json_decode($json, true));
         }
     }
@@ -199,6 +199,7 @@ if($update->has('message')) {
                     $pagerfanta->setCurrentPage(1);
 
                     $view = new \Pagerfanta\View\TelegramInlineView();
+                    $view->setMaxButtons(5);
                     $buttons = $view->render($pagerfanta, function($page) use ($text) {
                         return '/p=' . $page . '&q=' . $text;
                     });
@@ -226,6 +227,7 @@ if($update->has('message')) {
             $pagerfanta->setCurrentPage($matched['page']);
 
             $view = new \Pagerfanta\View\TelegramInlineView();
+            $view->setMaxButtons(5);
             $text = $pagerfanta->getAdapter()->getPageContent($pagerfanta, $matched['query']);
             $a = str_replace(':', '', strip_tags($text));
             $b = str_replace(':', '', $callbackQuery->getMessage()->getText());
