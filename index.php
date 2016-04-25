@@ -56,15 +56,17 @@ if($update->has('inline_query')) {
         $params = [
             'inline_query_id' => $inlineQuery->getId(),
             'cache_time' => 0,
-            'results' => [
-                InlineQueryResultArticle::make([
-                    'id' => 'no-query',
-                    'title' => 'Help',
-                    'message_text' => 'message_text'
-                ]),
+            'results' =>
+                [
+                    InlineQueryResultArticle::make([
+                        'id' => 'no-query',
+                        'title' => 'Help',
+                        'message_text' => 'message_text'
+                    ])
+                ],
             'switch_pm_text' => 'Type the query...',
             'switch_pm_parameter' => 'inline help'
-        ]
+        ];
     }
     $telegram->answerInlineQuery($params);
 } else
