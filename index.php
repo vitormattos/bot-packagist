@@ -52,7 +52,7 @@ if($update->has('inline_query')) {
             $params = [
                 'inline_query_id' => $inlineQuery->getId(),
                 'cache_time' => 0,
-                'offset' => $page['page']
+                'next_offset' => $page['page']
             ];
             foreach($response['results'] as $result) {
                 $encoded = rtrim(Base32::encode(gzdeflate($result['name'], 9)), '=');
