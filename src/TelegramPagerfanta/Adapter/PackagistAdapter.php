@@ -60,8 +60,7 @@ class PackagistAdapter implements AdapterInterface
             '<a href="' . $result['url'] . '">'.$result['name']."</a>\n".
             '<i>Last update:</i> ' . $date->format('Y-m-d H:i:s')."\n".
             "<i>Repository:</i> " . $result['repository']."\n".
-            '<code>composer require '.$result['name']."</code>\n".
-            '<i>View: </i>/v_' . rtrim(Base32::encode(gzdeflate($result['name'], 9)), '=');
+            '<code>composer require '.$result['name'].'</code>';
         return $text;
     }
 }
