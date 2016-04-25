@@ -29,7 +29,8 @@ $update = $telegram->getWebhookUpdates();
 if($update->has('inline_query')) {
     $inlineQuery = $update->getInlineQuery();
     if($query = $inlineQuery->getQuery()) {
-        $response = file_get_contents('https://packagist.org/search.json?q='.$query);
+        $page = $inlineQuery->getOffset()?:1;
+        $response = file_get_contents('https://packagist.org/search.json?q='.$query.'&page='.$page);
         $response = json_decode($response, true);
         if($response['total'] == 0) {
             $params = [
