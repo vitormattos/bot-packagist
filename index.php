@@ -44,17 +44,15 @@ if($update->has('inline_query')) {
         } else {
             $params = [
                 'inline_query_id' => $inlineQuery->getId(),
-                'cache_time' => 0,
-                'switch_pm_text' => 'Type the query...',
-                'switch_pm_parameter' => 'inline help'
+                'cache_time' => 0
             ];
             foreach($response['results'] as $result) {
                 $encoded = rtrim(Base32::encode(gzdeflate($result['name'], 9)), '=');
                 $params['results'][] = InlineQueryResultArticle::make([
                     'id' => $encoded,
                     'title' => $result['name'],
-                    'message_text' => '\v_'.$encoded,
-                    'description' => 'descrição'
+                    'message_text' => PackagistAdapter::getPackageRow($result),
+                    'description' => ($result['description'] ? : '')
                 ]);
             }
         }

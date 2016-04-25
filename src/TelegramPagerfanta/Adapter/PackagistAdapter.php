@@ -35,16 +35,22 @@ class PackagistAdapter implements AdapterInterface
         $results = array_slice($this->results['results'], $offset, $length);
         $text = "<b>Showing results for '$query'</b>";
         foreach($results as $result) {
-            if(strlen($result['description']) > 66) {
-                $result['description'] = substr($result['description'], 0, 65) . '...';
-            }
-            $encoded = rtrim(Base32::encode(gzdeflate($result['name'], 9)), '=');
-            $text.=
-                "\n\n".
-                "<b>{$result['name']}</b>\n".
-                ($result['description'] ? $result['description'] . "\n" : '').
-                "<i>View: </i>/v_".$encoded;
+            $text.= self::getPackageRow($result);
         }
+        return $text;
+    }
+    
+    public static function getPackageRow($result)
+    {
+        if(strlen($result['description']) > 66) {
+            $result['description'] = substr($result['description'], 0, 65) . '...';
+        }
+        $encoded = rtrim(Base32::encode(gzdeflate($result['name'], 9)), '=');
+        $text.=
+            "\n\n".
+            "<b>{$result['name']}</b>\n".
+            ($result['description'] ? $result['description'] . "\n" : '').
+            "<i>View: </i>/v_".$encoded;
         return $text;
     }
 }
