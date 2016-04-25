@@ -53,14 +53,14 @@ class PackagistAdapter implements AdapterInterface
         if(strlen($result['description']) > 66) {
             $result['description'] = substr($result['description'], 0, 65) . '...';
         }
-        $date = new \DateTime($result['package']['time']);
+        $date = new \DateTime($result['time']);
         $text =
             "<b>{$result['name']}</b>\n".
             ($result['description'] ? $result['description'] . "\n" : '').
-            '<a href="' . $result['url'] . '">'.$result['name'].'</a>'.
+            '<a href="' . $result['url'] . '">'.$result['name']."</a>\n".
             '<i>Last update:</i> ' . $date->format('Y-m-d H:i:s')."\n".
-            "<i>Repository:</i> " . $response['package']['repository']."\n".
-            '<code>composer require '.$response['package']['name']."</code>\n".
+            "<i>Repository:</i> " . $result['repository']."\n".
+            '<code>composer require '.$result['name']."</code>\n".
             '<i>View: </i>/v_' . rtrim(Base32::encode(gzdeflate($result['name'], 9)), '=');
         return $text;
     }

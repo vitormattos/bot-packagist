@@ -102,7 +102,7 @@ if($update->has('message')) {
                         $telegram->sendMessage([
                             'chat_id' => $message->getChat()->getId(),
                             'text' =>
-                                PackagistAdapter::getPackageRow($response, true)/*
+                                PackagistAdapter::showPackage($response['package'])/*
                                 "<b>{$response['package']['name']}</b>\n".
                                 ($response['package']['description'] ? $response['package']['description'] . "\n" : '').
                                 '<i>Last update:</i> ' . $date->format('Y-m-d H:i:s')."\n".
