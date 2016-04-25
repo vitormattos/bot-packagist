@@ -42,9 +42,11 @@ if($update->has('inline_query')) {
                 ])
             ];
         } else {
+            preg_match('/&page=(?<page>\d+)/', $response['next'], $page);
             $params = [
                 'inline_query_id' => $inlineQuery->getId(),
-                'cache_time' => 0
+                'cache_time' => 0,
+                'offset' => $page['page']
             ];
             foreach($response['results'] as $result) {
                 $encoded = rtrim(Base32::encode(gzdeflate($result['name'], 9)), '=');

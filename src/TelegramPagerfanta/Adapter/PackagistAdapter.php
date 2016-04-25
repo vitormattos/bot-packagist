@@ -57,7 +57,6 @@ class PackagistAdapter implements AdapterInterface
         $text =
             "<b>{$result['name']}</b>\n".
             ($result['description'] ? $result['description'] . "\n" : '').
-            '<a href="' . $result['url'] . '">'.$result['name']."</a>\n".
             '<i>Last update:</i> ' . $date->format('Y-m-d H:i:s')."\n".
             "<i>Repository:</i> " . $result['repository']."\n".
             '<code>composer require '.$result['name'].'</code>';
