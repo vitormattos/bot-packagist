@@ -102,11 +102,12 @@ if($update->has('message')) {
                         $telegram->sendMessage([
                             'chat_id' => $message->getChat()->getId(),
                             'text' =>
+                                PackagistAdapter::getPackageRow($response, true)/*
                                 "<b>{$response['package']['name']}</b>\n".
                                 ($response['package']['description'] ? $response['package']['description'] . "\n" : '').
                                 '<i>Last update:</i> ' . $date->format('Y-m-d H:i:s')."\n".
                                 "<i>Repository:</i> " . $response['package']['repository']."\n".
-                                '<code>composer require '.$response['package']['name'].'</code>',
+                                '<code>composer require '.$response['package']['name'].'</code>'*/,
                             'parse_mode' => 'HTML',
                             'disable_web_page_preview' => true
                         ]);

@@ -51,10 +51,14 @@ class PackagistAdapter implements AdapterInterface
                 ($result['description'] ? $result['description'] . "\n" : '').
                 'View: <a href="' . $result['url'] . '">'.$result['name'].'</a>';
         } else {
+            $date = new DateTime($response['package']['time']);
             $text =
                 "\n\n".
                 "<b>{$result['name']}</b>\n".
                 ($result['description'] ? $result['description'] . "\n" : '').
+                '<i>Last update:</i> ' . $date->format('Y-m-d H:i:s')."\n".
+                "<i>Repository:</i> " . $response['package']['repository']."\n".
+                '<code>composer require '.$response['package']['name'].'</code>'.
                 '<i>View: </i>/v_' . rtrim(Base32::encode(gzdeflate($result['name'], 9)), '=');
         }
         return $text;
