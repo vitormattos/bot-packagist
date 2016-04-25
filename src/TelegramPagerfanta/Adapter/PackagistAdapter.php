@@ -64,9 +64,13 @@ class PackagistAdapter implements AdapterInterface
                 ? '<i>Last update:</i> ' . $date->format('Y-m-d H:i:s')."\n"
                 : ''
             ).
-            "<i>Downloads total:</i> " . $result['downloads']['total']."\n".
-            "<i>Downloads monthly:</i> " . $result['downloads']['monthly']."\n".
-            "<i>Downloads daily:</i> " . $result['downloads']['daily']."\n".
+            (
+                is_array($result['downloads'])
+                    ? "<i>Downloads total:</i> " . $result['downloads']['total']."\n".
+                      "<i>Downloads monthly:</i> " . $result['downloads']['monthly']."\n".
+                      "<i>Downloads daily:</i> " . $result['downloads']['daily']."\n"
+                    : $result['downloads']
+            ) .
             "<i>Repository:</i> " . $result['repository']."\n".
             '<code>composer require '.$result['name'].'</code>';
         return $text;
