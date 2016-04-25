@@ -48,14 +48,14 @@ if($update->has('inline_query')) {
         } else {
             if(array_key_exists('next', $response)) {
                 preg_match('/&page=(?<page>\d+)/', $response['next'], $next_offset);
-                $params = ['next_offset' => $next_offset['page']];
+                $params['next_offset'] = $next_offset['page'];
             } else {
-                $params = ['next_offset' => ''];
+                $params['next_offset'] = '';
             }
             foreach($response['results'] as $result) {
                 $encoded = rtrim(Base32::encode(gzdeflate($result['name'], 9)), '=');
                 $params['results'][] = InlineQueryResultArticle::make([
-                    'id' => $encoded,
+                    'id' => substr($encoded, 0, 63),
                     'title' => $result['name'],
                     'message_text' => PackagistAdapter::showPackage($result),
                     'description' => ($result['description'] ? : ''),
