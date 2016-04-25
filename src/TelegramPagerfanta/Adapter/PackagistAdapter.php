@@ -69,7 +69,7 @@ class PackagistAdapter implements AdapterInterface
                     ? "<i>Downloads total:</i> " . $result['downloads']['total']."\n".
                       "<i>Downloads monthly:</i> " . $result['downloads']['monthly']."\n".
                       "<i>Downloads daily:</i> " . $result['downloads']['daily']."\n"
-                    : "<i>Downloads total:</i> " . $result['downloads']
+                    : "<i>Downloads total:</i> " . $result['downloads']."\n"
             ) .
             "<i>Repository:</i> " . $result['repository']."\n".
             '<code>composer require '.$result['name'].'</code>';
