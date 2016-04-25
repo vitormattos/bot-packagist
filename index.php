@@ -70,6 +70,11 @@ if($update->has('inline_query')) {
             'switch_pm_parameter' => 'inline help'
         ];
     }
+    error_log(print_r(
+        [
+            'inline_query_id' => $inlineQuery->getId(),
+            'cache_time' => 0,
+        ] +  $params, true));
     $telegram->answerInlineQuery(
         [
             'inline_query_id' => $inlineQuery->getId(),
