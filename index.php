@@ -146,6 +146,14 @@ if($update->has('message')) {
                     'disable_web_page_preview' => true
                 ]);
                 break;
+            case strlen($text) > 64:
+                $telegram->sendMessage([
+                    'chat_id' => $message->getChat()->getId(),
+                    'text' =>
+                        'Too long text. Search using a short string.',
+                    'disable_web_page_preview' => true
+                ]);
+                break;
             default:
                 $response = file_get_contents('https://packagist.org/search.json?q='.$text);
                 $response = json_decode($response, true);
