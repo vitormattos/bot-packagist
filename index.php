@@ -49,10 +49,11 @@ if($update->has('inline_query')) {
                 'switch_pm_parameter' => 'inline help'
             ];
             foreach($response['results'] as $result) {
+                $encoded = rtrim(Base32::encode(gzdeflate($result['name'], 9)), '=');
                 $params['results'][] = InlineQueryResultArticle::make([
-                    'id' => 'no-query',
+                    'id' => $encoded,
                     'title' => $result['name'],
-                    'message_text' => '\v_'.rtrim(Base32::encode(gzdeflate($result['name'], 9)), '='),
+                    'message_text' => '\v_'.$encoded,
                     'description' => 'descrição'
                 ]);
             }
