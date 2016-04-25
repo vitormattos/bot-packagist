@@ -52,7 +52,9 @@ if($update->has('inline_query')) {
                     'id' => $encoded,
                     'title' => $result['name'],
                     'message_text' => PackagistAdapter::getPackageRow($result),
-                    'description' => ($result['description'] ? : '')
+                    'description' => ($result['description'] ? : ''),
+                    'parse_mode' => 'HTML',
+                    'disable_web_page_preview' => true
                 ]);
             }
         }
