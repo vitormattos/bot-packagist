@@ -51,7 +51,7 @@ if($update->has('inline_query')) {
                 $params['results'][] = InlineQueryResultArticle::make([
                     'id' => $encoded,
                     'title' => $result['name'],
-                    'message_text' => PackagistAdapter::getPackageRow($result, true),
+                    'message_text' => PackagistAdapter::showPackage($result),
                     'description' => ($result['description'] ? : ''),
                     'parse_mode' => 'HTML',
                     'disable_web_page_preview' => true
