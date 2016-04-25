@@ -32,15 +32,20 @@ if($update->has('inline_query')) {
         $response = file_get_contents('https://packagist.org/search.json?q='.$query);
         $response = json_decode($response, true);
         if($response['total'] == 0) {
-            $results = [
-                InlineQueryResultArticle::make([
-                    'id' => 'no-query',
-                    'title' => 'No results',
-                    'message_text' => 'texto',
-                    'description' =>
-                        'Sorry! I found nothing with your search term. Try again.'
-                ])
-            ];
+            $params = [
+                'inline_query_id' => $inlineQuery->getId(),
+                'cache_time' => 0,
+                'results' =>
+                    [
+                        InlineQueryResultArticle::make([
+                            'id' => 'no-query',
+                            'title' => 'No results',
+                            'message_text' => 'texto',
+                            'description' =>
+                                'Sorry! I found nothing with your search term. Try again.'
+                        ])
+                    ]
+                ];
         } else {
             preg_match('/&page=(?<page>\d+)/', $response['next'], $page);
             $params = [
