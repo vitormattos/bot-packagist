@@ -42,6 +42,16 @@ if($update->has('inline_query')) {
                         'Sorry! I found nothing with your search term. Try again.'
                 ])
             ];
+            $params = [
+                'inline_query_id' => $inlineQuery->getId(),
+                'results' => [
+                    InlineQueryResultArticle::make([
+                        'id' => 'no-query',
+                        'title' => 'Help',
+                        'message_text' => 'bla'
+                    ])
+                ]
+            ];
         } else {
             foreach($response['results'] as $result) {
                 $params = [
@@ -57,19 +67,9 @@ if($update->has('inline_query')) {
             'inline_query_id' => $inlineQuery->getId(),
             'results' => $params
         ];
+        $telegram->answerInlineQuery($params);
     } else {
-        $params = [
-            'inline_query_id' => $inlineQuery->getId(),
-            'results' => [
-                InlineQueryResultArticle::make([
-                    'id' => 'no-query',
-                    'title' => 'Help',
-                    'message_text' => 'bla'
-                ])
-            ]
-        ];
     }
-    $telegram->answerInlineQuery($params);
 } else
 // Inline Keyboard
 if($update->has('message')) {
