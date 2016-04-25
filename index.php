@@ -33,7 +33,7 @@ if($update->has('inline_query')) {
         $response = file_get_contents('https://packagist.org/search.json?q='.$query);
         $response = json_decode($response, true);
         if($response['total'] == 0) {
-            $params = [
+            $results = [
                 InlineQueryResultArticle::make([
                     'id' => 'no-query',
                     'title' => 'No results',
@@ -44,7 +44,7 @@ if($update->has('inline_query')) {
             ];
         } else {
             foreach($response['results'] as $result) {
-                $params = [
+                $results = [
                     InlineQueryResultArticle::make([
                         'id' => 'no-query',
                         'title' => $result['name'],
@@ -53,24 +53,20 @@ if($update->has('inline_query')) {
                 ];
             }
         }
-        $params = [
-            'inline_query_id' => $inlineQuery->getId(),
-            'results' => $params
-        ];
     } else {
-        $params = [
-            'inline_query_id' => $inlineQuery->getId(),
-            'cache_time' => 0,
-            'results' => [
-                InlineQueryResultArticle::make([
-                    'id' => 'no-query',
-                    'title' => 'Help',
-                    'message_text' => ''
-                ])
-            ]
+        $results = [
+            InlineQueryResultArticle::make([
+                'id' => 'no-query',
+                'title' => 'Help',
+                'message_text' => 'message_text'
+            ])
         ];
     }
-    $telegram->answerInlineQuery($params);
+    $telegram->answerInlineQuery([
+        'inline_query_id' => $inlineQuery->getId(),
+        'cache_time' => 0,
+        'results' => $results
+    ]);
 } else
 // Inline Keyboard
 if($update->has('message')) {
