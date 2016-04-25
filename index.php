@@ -65,9 +65,11 @@ if($update->has('inline_query')) {
                 ];
                 if(preg_match('/github.com\/(?<login>.*)\//', $result['repository'], $githubUser)) {
                     $githubUser = file_get_contents('https://api.github.com/users/'.$githubUser['login']);
-                    $githubUser = json_decode($githubUser, true);
                     if($githubUser) {
-                        $items['thumb_url'] = $githubUser['avatar_url'];
+                        $githubUser = json_decode($githubUser, true);
+                        if($githubUser) {
+                            $items['thumb_url'] = $githubUser['avatar_url'];
+                        }
                     }
                 }
                 $params['results'][] = InlineQueryResultArticle::make($items);
