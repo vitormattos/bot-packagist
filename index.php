@@ -69,6 +69,15 @@ if($update->has('message')) {
                     }
                 }
                 break;
+            case '/about':
+                $telegram->sendMessage([
+                    'chat_id' => $message->getChat()->getId(),
+                    'text' =>
+                        "Bot created by @vitormattos\n".
+                        "Source in: https://github.com/vitormattos/bot-packagist",
+                    'disable_web_page_preview' => true
+                ]);
+                break;
             case (preg_match('/^\//', $text) ? true : false):
                 $telegram->sendMessage([
                     'chat_id' => $message->getChat()->getId(),
