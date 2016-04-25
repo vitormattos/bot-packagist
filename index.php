@@ -34,8 +34,6 @@ if($update->has('inline_query')) {
         $response = json_decode($response, true);
         if($response['total'] == 0) {
             $params = [
-                'inline_query_id' => $inlineQuery->getId(),
-                'cache_time' => 0,
                 'results' =>
                     [
                         InlineQueryResultArticle::make([
@@ -50,15 +48,10 @@ if($update->has('inline_query')) {
         } else {
             if(array_key_exists('next', $response)) {
                 preg_match('/&page=(?<page>\d+)/', $response['next'], $next_offset);
-                $next_offset = $next_offset['page'];
+                $params = ['next_offset' => $next_offset['page']];
             } else {
-                $next_offset = '';
+                $params = ['next_offset' => ''];
             }
-            $params = [
-                'inline_query_id' => $inlineQuery->getId(),
-                'cache_time' => 0,
-                'next_offset' => $next_offset
-            ];
             foreach($response['results'] as $result) {
                 $encoded = rtrim(Base32::encode(gzdeflate($result['name'], 9)), '=');
                 $params['results'][] = InlineQueryResultArticle::make([
@@ -73,13 +66,16 @@ if($update->has('inline_query')) {
         }
     } else {
         $params = [
-            'inline_query_id' => $inlineQuery->getId(),
-            'cache_time' => 0,
             'switch_pm_text' => 'Type the query...',
             'switch_pm_parameter' => 'inline help'
         ];
     }
-    $telegram->answerInlineQuery($params);
+    $telegram->answerInlineQuery(
+        [
+            'inline_query_id' => $inlineQuery->getId(),
+            'cache_time' => 0,
+        ] +  $params
+    );
 } else
 // Inline Keyboard
 if($update->has('message')) {
