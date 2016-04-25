@@ -51,7 +51,7 @@ class PackagistAdapter implements AdapterInterface
                 ($result['description'] ? $result['description'] . "\n" : '').
                 'View: <a href="' . $result['url'] . '">'.$result['name'].'</a>';
         } else {
-            $date = new DateTime($response['package']['time']);
+            $date = new \DateTime($response['package']['time']);
             $text =
                 "\n\n".
                 "<b>{$result['name']}</b>\n".
