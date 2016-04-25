@@ -64,9 +64,10 @@ if($update->has('inline_query')) {
                 InlineQueryResultArticle::make([
                     'id' => 'no-query',
                     'title' => 'Help',
-//                     'input_message_content' => InputTextMessageContent::make([
-//                         'message_text' => '/help'
-//                     ])
+                    'input_message_content' => InputTextMessageContent::make([
+                        'message_text' => '/help'
+                    ]),
+                    'switch_pm_text' => 'que isso?'
                 ])
             ]
         ];
