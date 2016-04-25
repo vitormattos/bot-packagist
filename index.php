@@ -51,7 +51,7 @@ if($update->has('inline_query')) {
                 $params['results'][] = InlineQueryResultArticle::make([
                     'id' => $encoded,
                     'title' => $result['name'],
-                    'message_text' => PackagistAdapter::getPackageRow($result),
+                    'message_text' => PackagistAdapter::getPackageRow($result). '<a href="telegram.org">link</a>',
                     'description' => ($result['description'] ? : ''),
                     'parse_mode' => 'HTML',
                     'disable_web_page_preview' => true
