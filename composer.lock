@@ -403,12 +403,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/irazasyed/telegram-bot-sdk.git",
-                "reference": "0228bb43df455768b629426dc5e53e6454b9065b"
+                "reference": "4c8015f4900823006fa484baad719ef9b03e00ee"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/irazasyed/telegram-bot-sdk/zipball/0228bb43df455768b629426dc5e53e6454b9065b",
-                "reference": "0228bb43df455768b629426dc5e53e6454b9065b",
+                "url": "https://api.github.com/repos/irazasyed/telegram-bot-sdk/zipball/4c8015f4900823006fa484baad719ef9b03e00ee",
+                "reference": "4c8015f4900823006fa484baad719ef9b03e00ee",
                 "shasum": ""
             },
             "require": {
@@ -457,7 +457,7 @@
                 "telegram php",
                 "telegram sdk"
             ],
-            "time": "2016-04-24 18:26:17"
+            "time": "2016-04-25 09:34:28"
         },
         {
             "name": "pagerfanta/pagerfanta",
@@ -465,12 +465,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/vitormattos/Pagerfanta.git",
-                "reference": "6be374c97ed48e01bb0c7784a263d43db869fb09"
+                "reference": "3d2a2a3d5712229d6b24a6ff6b75fe00e5a282e7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/vitormattos/Pagerfanta/zipball/6be374c97ed48e01bb0c7784a263d43db869fb09",
-                "reference": "6be374c97ed48e01bb0c7784a263d43db869fb09",
+                "url": "https://api.github.com/repos/vitormattos/Pagerfanta/zipball/3d2a2a3d5712229d6b24a6ff6b75fe00e5a282e7",
+                "reference": "3d2a2a3d5712229d6b24a6ff6b75fe00e5a282e7",
                 "shasum": ""
             },
             "require": {
@@ -526,7 +526,7 @@
             "support": {
                 "source": "https://github.com/vitormattos/Pagerfanta/tree/master"
             },
-            "time": "2016-04-25 07:24:59"
+            "time": "2016-04-25 09:42:27"
         },
         {
             "name": "paragonie/random_compat",
