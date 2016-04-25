@@ -13,7 +13,7 @@ require_once 'config.php';
 if(getenv('MODE_ENV') == 'develop') {
     class mockApi extends Api{
         public function getWebhookUpdates() {
-            $json = '{"update_id":459422131,"inline_query":{"id":"162783457460083254","from":{"id":37900977,"first_name":"Vitor Mattos","last_name":"@Monergist","username":"VitorMattos"},"query":"phpunit","offset":"2"}}';
+            $json = '{"update_id":459422173,"message":{"message_id":292,"from":{"id":37900977,"first_name":"Vitor Mattos","last_name":"@Monergist","username":"VitorMattos"},"chat":{"id":37900977,"first_name":"Vitor Mattos","last_name":"@Monergist","username":"VitorMattos","type":"private"},"date":1461588316,"text":"\/v_FPECQKGNZMWNCL6IFDIC3SOPJ3G5GLJOFFFE3TAFAA","entities":[{"type":"bot_command","offset":0,"length":45}]}}';
             return new Update(json_decode($json, true));
         }
     }
