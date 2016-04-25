@@ -40,7 +40,7 @@ class PackagistAdapter implements AdapterInterface
         return $text;
     }
     
-    public static function getPackageRow($result, $inline)
+    public static function getPackageRow($result, $inline = false)
     {
         if(strlen($result['description']) > 66) {
             $result['description'] = substr($result['description'], 0, 65) . '...';
