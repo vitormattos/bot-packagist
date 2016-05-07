@@ -38,7 +38,8 @@ class PackagistAdapter implements AdapterInterface
             if(strlen($result['description']) > 66) {
                 $result['description'] = substr($result['description'], 0, 65) . '...';
             }
-            $encoded = rtrim(Base32::encode(gzdeflate($result['name'], 9)), '=');
+            //$encoded = rtrim(Base32::encode(gzdeflate($result['name'], 9)), '=');
+            $encoded = str_replace(array('/', '-'), array('X', '_'), strtolower($result['name']));
             $text.=
                 "\n\n".
                 "<b>{$result['name']}</b>\n".
