@@ -6,7 +6,7 @@ use TelegramPagerfanta\Adapter\PackagistAdapter;
 use Pagerfanta\Pagerfanta;
 use Base32\Base32;
 use Telegram\Bot\Objects\InlineQuery\InlineQueryResultArticle;
-use function GuzzleHttp\json_decode;
+
 require_once 'vendor/autoload.php';
 require_once 'config.php';
 
