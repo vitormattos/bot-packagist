@@ -157,7 +157,7 @@ if($update->has('message')) {
                 $telegram->sendMessage([
                     'chat_id' => $message->getChat()->getId(),
                     'text' =>
-                        'For use inline query mode, type @olxbrbot in message box and type the text to search',
+                        'For use inline query mode, type @PackagistBot in message box and type the text to search',
                     'disable_web_page_preview' => true
                 ]);
                 break;
