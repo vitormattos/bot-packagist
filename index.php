@@ -6,7 +6,7 @@ use TelegramPagerfanta\Adapter\PackagistAdapter;
 use Pagerfanta\Pagerfanta;
 use Base32\Base32;
 use Telegram\Bot\Objects\InlineQuery\InlineQueryResultArticle;
-use function GuzzleHttp\json_decode;
+
 require_once 'vendor/autoload.php';
 require_once 'config.php';
 
@@ -104,11 +104,11 @@ if($update->has('message')) {
     if($message->has('text')) {
         switch($text = $message->getText()) {
             case (preg_match('/\/v_(?<encoded>.+)/', $text, $matched) ? true : false):
-                $name = str_replace('_', '-', $matched['encoded']);
-                $name = Base32::decode($name);
+                $name = str_replace(array('_', 'X'), array('-', '/'), $matched['encoded']);
+                /*$name = Base32::decode($name);
                 if($name) {
                     $name = gzinflate($name);
-                }
+                }*/
                 if(!$name) {
                     $telegram->sendMessage([
                         'chat_id' => $message->getChat()->getId(),
