@@ -1,8 +1,10 @@
 <?php
 use Telegram\Bot\Api;
 require 'vendor/autoload.php';
-require 'config.php';
-
+if(file_exists('../.env')) {
+    $dotenv = new Dotenv\Dotenv(__DIR__.'/../');
+    $dotenv->load();
+}
 if(isset($_GET['url'])) {
     $url = $_GET['url'];
 } else {
@@ -29,8 +31,7 @@ $certificate = trim($certificate, "\n");
 echo '<pre>';
 echo $certificate;
 echo '</pre>';
-
-$telegram = new Api($config['token']);
+$telegram = new Api();
 $response = $telegram->setWebhook([
     'url' => 'https://'.$url,
     'certificate' => $certificate

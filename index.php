@@ -8,19 +8,22 @@ use Base32\Base32;
 use Telegram\Bot\Objects\InlineQuery\InlineQueryResultArticle;
 
 require_once 'vendor/autoload.php';
-require_once 'config.php';
 
-if(getenv('MODE_ENV') == 'develop') {
+if(file_exists('.env')) {
+    $dotenv = new Dotenv\Dotenv(__DIR__);
+    $dotenv->load();
+}
+
+if(getenv('MOCK_JSON')) {
     class mockApi extends Api{
-        public function getWebhookUpdates() {
-            $json = '{"update_id":459422206,"message":{"message_id":307,"from":{"id":37900977,"first_name":"Vitor Mattos","last_name":"@Monergist","username":"VitorMattos"},"chat":{"id":37900977,"first_name":"Vitor Mattos","last_name":"@Monergist","username":"VitorMattos","type":"private"},"date":1461596924,"text":"phpunit"}}';
-            return new Update(json_decode($json, true));
+        public function getWebhookUpdate($shouldEmitEvent = true) {
+            return new Update(json_decode(getenv('MOCK_JSON'), true));
         }
     }
-    $telegram = new mockApi($config['token']);
+    $telegram = new mockApi();
 } else {
     error_log(file_get_contents('php://input'));
-    $telegram = new Api($config['token']);
+    $telegram = new Api();
 }
 
 $update = $telegram->getWebhookUpdates();
@@ -70,7 +73,7 @@ if($update->has('inline_query')) {
                             'https://api.github.com/users/'.$githubUser['login'],
                             [
                                 'headers' => [
-                                    'Authorization' => 'token '.$config['token_github']
+                                    'Authorization' => 'token '.getenv('OAUTH_TOKEN_GITHUB')
                                 ]
                             ]
                         );
