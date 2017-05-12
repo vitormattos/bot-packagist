@@ -105,7 +105,6 @@ if($update->has('inline_query')) {
     //} catch (Exception $e) {
         error_log('############################################');
         error_log(file_get_contents('php://input'));
-        error_log('message:'.serialize($e->getMessage()));
         $params = [
             'inline_query_id' => $inlineQuery->getId()
         ] +  $params;
