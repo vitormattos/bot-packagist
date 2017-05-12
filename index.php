@@ -94,12 +94,16 @@ if($update->has('inline_query')) {
             'switch_pm_parameter' => 'inline help'
         ];
     }
-    $telegram->answerInlineQuery(
-        [
-            'inline_query_id' => $inlineQuery->getId(),
-            'cache_time' => 0,
-        ] +  $params
-    );
+    try {
+        $telegram->answerInlineQuery(
+            [
+                'inline_query_id' => $inlineQuery->getId(),
+                'cache_time' => 0,
+            ] +  $params
+        );
+    } catch (TelegramResponseException $e) {
+        error_log(serialize($e));
+    }
 } else
 // Inline Keyboard
 if($update->has('message')) {
