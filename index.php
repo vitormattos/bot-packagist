@@ -128,8 +128,9 @@ if($update->has('inline_query')) {
         
         $options = $request->getPostParams();
         $rawResponse = $client->getHttpClientHandler()->send($url, $method, $headers, $options, $timeOut, $isAsyncRequest, $connectTimeOut);
+        error_log('vars:'.print_r([$url, $method, $headers, $options, $timeOut, $isAsyncRequest, $connectTimeOut],true))
 
-        //error_log('rawResponse:'.print_r($rawResponse, true));
+        error_log('rawResponse:'.print_r($rawResponse, true));
         $returnResponse = new TelegramResponse($request, $rawResponse);
         //error_log('returnResponse:'.print_r($returnResponse, true));
         error_log('returnBody:'.print_r($returnResponse->getDecodedBody(), true));
