@@ -97,14 +97,16 @@ if($update->has('inline_query')) {
     try {
         $telegram->answerInlineQuery(
             [
-                'inline_query_id' => $inlineQuery->getId(),
-                'cache_time' => 0,
+                'inline_query_id' => $inlineQuery->getId()
             ] +  $params
         );
     } catch (Exception $e) {
         error_log('############################################');
         error_log(file_get_contents('php://input'));
         error_log('message:'.serialize($e->getMessage()));
+        error_log([
+            'inline_query_id' => $inlineQuery->getId()
+        ] +  $params);
         error_log('^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^');
     }
 } else
