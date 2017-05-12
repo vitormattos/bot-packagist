@@ -6,6 +6,8 @@ use TelegramPagerfanta\Adapter\PackagistAdapter;
 use Pagerfanta\Pagerfanta;
 use Base32\Base32;
 use Telegram\Bot\Objects\InlineQuery\InlineQueryResultArticle;
+use Telegram\Bot\TelegramRequest;
+use Telegram\Bot\TelegramResponse;
 
 require_once 'vendor/autoload.php';
 
@@ -104,9 +106,38 @@ if($update->has('inline_query')) {
         error_log('############################################');
         error_log(file_get_contents('php://input'));
         error_log('message:'.serialize($e->getMessage()));
-        error_log(print_r([
+        $params = [
             'inline_query_id' => $inlineQuery->getId()
-        ] +  $params, true));
+        ] +  $params;
+        error_log('params_1:'.print_r($params, true));
+        $params = ['form_params' => $params];
+        error_log('params_2:'.print_r($params, true));
+        $request = new TelegramRequest(
+            $telegram->getAccessToken(),
+            'POST',
+            'answerInlineQuery',
+            $params,
+            $telegram->isAsyncRequest(),
+            $telegram->getTimeOut(),
+            $telegram->getConnectTimeOut()
+        );
+        error_log('request:'.print_r($request, true));
+        $client = $telegram->getClient();
+        list($url, $method, $headers, $isAsyncRequest) = $client->prepareRequest($request);
+        $timeOut = $request->getTimeOut();
+        $connectTimeOut = $request->getConnectTimeOut();
+        
+        if ($method === 'POST') {
+            $options = $request->getPostParams();
+        } else {
+            $options = ['query' => $request->getParams()];
+        }
+        $rawResponse = $client->getHttpClientHandler()->send($url, $method, $headers, $options, $timeOut, $isAsyncRequest, $connectTimeOut);
+
+        error_log('rawResponse:'.print_r($rawResponse, true));
+        $returnResponse = new TelegramResponse($request, $rawResponse);
+        error_log('returnResponse:'.print_r($returnResponse, true));
+        error_log('returnBody:'.print_r($returnResponse->getDecodedBody(), true));
         error_log('^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^');
     }
 } else
