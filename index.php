@@ -110,8 +110,8 @@ if($update->has('inline_query')) {
             'inline_query_id' => $inlineQuery->getId()
         ] +  $params;
         error_log('params_1:'.print_r($params, true));
-        $params = ['form_params' => $params];
-        error_log('params_2:'.print_r($params, true));
+        //$params = ['form_params' => $params];
+        //error_log('params_2:'.print_r($params, true));
         $request = new TelegramRequest(
             $telegram->getAccessToken(),
             'POST',
@@ -127,16 +127,12 @@ if($update->has('inline_query')) {
         $timeOut = $request->getTimeOut();
         $connectTimeOut = $request->getConnectTimeOut();
         
-        if ($method === 'POST') {
-            $options = $request->getPostParams();
-        } else {
-            $options = ['query' => $request->getParams()];
-        }
+        $options = $request->getPostParams();
         $rawResponse = $client->getHttpClientHandler()->send($url, $method, $headers, $options, $timeOut, $isAsyncRequest, $connectTimeOut);
 
-        error_log('rawResponse:'.print_r($rawResponse, true));
+        //error_log('rawResponse:'.print_r($rawResponse, true));
         $returnResponse = new TelegramResponse($request, $rawResponse);
-        error_log('returnResponse:'.print_r($returnResponse, true));
+        //error_log('returnResponse:'.print_r($returnResponse, true));
         error_log('returnBody:'.print_r($returnResponse->getDecodedBody(), true));
         error_log('^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^');
     }
