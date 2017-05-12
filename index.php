@@ -96,13 +96,13 @@ if($update->has('inline_query')) {
             'switch_pm_parameter' => 'inline help'
         ];
     }
-    try {
-        $telegram->answerInlineQuery(
-            [
-                'inline_query_id' => $inlineQuery->getId()
-            ] +  $params
-        );
-    } catch (Exception $e) {
+    //try {
+    //    $telegram->answerInlineQuery(
+    //        [
+    //            'inline_query_id' => $inlineQuery->getId()
+    //        ] +  $params
+    //    );
+    //} catch (Exception $e) {
         error_log('############################################');
         error_log(file_get_contents('php://input'));
         error_log('message:'.serialize($e->getMessage()));
@@ -135,7 +135,7 @@ if($update->has('inline_query')) {
         //error_log('returnResponse:'.print_r($returnResponse, true));
         error_log('returnBody:'.print_r($returnResponse->getDecodedBody(), true));
         error_log('^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^');
-    }
+    //}
 } else
 // Inline Keyboard
 if($update->has('message')) {
