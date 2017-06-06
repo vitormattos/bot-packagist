@@ -30,7 +30,9 @@ if(getenv('MOCK_JSON')) {
 
 $update = $telegram->getWebhookUpdates();
 
-if ($update->has('channel_post') || in_array($update->getMessage()->getFrom()->getId(), explode(',', getenv('BLACKLIST')))) {
+if ($update->has('channel_post') || 
+    ($update->has('message') && in_array($update->getMessage()->getFrom()->getId(), explode(',', getenv('BLACKLIST'))))
+    ) {
     error_log('################### BLACKLIST ###################');
     error_log(file_get_contents('php://input'));
     return;
