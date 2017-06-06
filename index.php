@@ -1,6 +1,5 @@
 <?php
 use Telegram\Bot\Api;
-use Telegram\Bot\Keyboard\Keyboard;
 use Telegram\Bot\Objects\Update;
 use TelegramPagerfanta\Adapter\PackagistAdapter;
 use Pagerfanta\Pagerfanta;
@@ -19,7 +18,8 @@ if(file_exists('.env')) {
 if(getenv('MOCK_JSON')) {
     class mockApi extends Api{
         public function getWebhookUpdate($shouldEmitEvent = true) {
-            return new Update(json_decode(getenv('MOCK_JSON'), true));
+            $content = trim(getenv('MOCK_JSON'), "'");
+            return new Update(json_decode($content, true));
         }
     }
     $telegram = new mockApi();
@@ -29,7 +29,8 @@ if(getenv('MOCK_JSON')) {
 }
 
 $update = $telegram->getWebhookUpdates();
-if (in_array($update->getMessage()->getFrom()->getId(), explode(',', getenv('BLACKLIST')))) {
+
+if ($update->has('channel_post') || in_array($update->getMessage()->getFrom()->getId(), explode(',', getenv('BLACKLIST')))) {
     error_log('################### BLACKLIST ###################');
     error_log(file_get_contents('php://input'));
     return;
