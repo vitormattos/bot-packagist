@@ -29,7 +29,10 @@ if(getenv('MOCK_JSON')) {
 }
 
 $update = $telegram->getWebhookUpdates();
-
+if (in_array($update->getMessage()->getFrom()->getId(), explode(',', getenv('BLACKLIST')))) {
+    error_log(file_get_contents('php://input'));
+    return;
+}
 
 // Inline Query
 if($update->has('inline_query')) {
