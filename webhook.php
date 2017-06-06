@@ -34,7 +34,8 @@ echo '</pre>';
 $telegram = new Api();
 $response = $telegram->setWebhook([
     'url' => 'https://'.$url,
-    'certificate' => $certificate
+    'certificate' => $certificate,
+    'allowed_updates' => ['inline_query','callback_query','message']
 ]);
 echo '<pre>';
 var_dump([
