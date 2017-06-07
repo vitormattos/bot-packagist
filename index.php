@@ -92,11 +92,18 @@ if($update->has('inline_query')) {
     } else {
         $params = [
             'switch_pm_text' => 'Type the query...',
-            'switch_pm_parameter' => 'inline help',
-            'results'=>[]
+            'switch_pm_parameter' => 'inline help'
         ];
     }
     try {
+        $params['results'][] = InlineQueryResultArticle::make([
+            'id' => time(),
+            'title' => 'bla',
+            'message_text' => 'message',
+            'description' => 'description',
+            'parse_mode' => 'HTML',
+            'disable_web_page_preview' => true
+        ]);
         $request =
         [
             'inline_query_id' => $inlineQuery->getId()
