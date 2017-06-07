@@ -112,8 +112,8 @@ if($update->has('inline_query')) {
         $telegram->answerInlineQuery($request);
     } catch (Exception $e) {
         error_log('############################################');
-        return;
         error_log(file_get_contents('php://input'));
+        return;
         $params = [
             'inline_query_id' => $inlineQuery->getId()
         ] +  $params;
