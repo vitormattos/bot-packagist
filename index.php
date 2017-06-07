@@ -96,47 +96,11 @@ if($update->has('inline_query')) {
             'results' => []
         ];
     }
-    try {
-        $request =
+    $telegram->answerInlineQuery(
         [
             'inline_query_id' => $inlineQuery->getId()
-        ] +  $params;
-        $telegram->answerInlineQuery($request);
-    } catch (Exception $e) {
-        error_log('############################################');
-        error_log($e->getMessage());
-        error_log(file_get_contents('php://input'));
-        $params = [
-            'inline_query_id' => $inlineQuery->getId()
-        ] +  $params;
-        error_log('params_1:'.print_r($params, true));
-        $params = ['form_params' => $params];
-        //error_log('params_2:'.print_r($params, true));
-        $request = new TelegramRequest(
-            $telegram->getAccessToken(),
-            'POST',
-            'answerInlineQuery',
-            $params,
-            $telegram->isAsyncRequest(),
-            $telegram->getTimeOut(),
-            $telegram->getConnectTimeOut()
-        );
-        error_log('request:'.print_r($request, true));
-        $client = $telegram->getClient();
-        list($url, $method, $headers, $isAsyncRequest) = $client->prepareRequest($request);
-        $timeOut = $request->getTimeOut();
-        $connectTimeOut = $request->getConnectTimeOut();
-        
-        $options = $request->getPostParams();
-        $rawResponse = $client->getHttpClientHandler()->send($url, $method, $headers, $options, $timeOut, $isAsyncRequest, $connectTimeOut);
-        error_log('vars:'.print_r([$url, $method, $headers, $options, $timeOut, $isAsyncRequest, $connectTimeOut],true));
-
-        error_log('rawResponse:'.print_r($rawResponse, true));
-        $returnResponse = new TelegramResponse($request, $rawResponse);
-        //error_log('returnResponse:'.print_r($returnResponse, true));
-        error_log('returnBody:'.print_r($returnResponse->getDecodedBody(), true));
-        error_log('^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^');
-    }
+        ] +  $params
+    );
 } else
 // Inline Keyboard
 if($update->has('message')) {
@@ -168,16 +132,9 @@ if($update->has('message')) {
                         ]);
                     } else {
                         $date = new DateTime($response['package']['time']);
-                        $telegram->setUseEmojify(false);
                         $telegram->sendMessage([
                             'chat_id' => $message->getChat()->getId(),
-                            'text' =>
-                                PackagistAdapter::showPackage($response['package'])/*
-                                "<b>{$response['package']['name']}</b>\n".
-                                ($response['package']['description'] ? $response['package']['description'] . "\n" : '').
-                                '<i>Last update:</i> ' . $date->format('Y-m-d H:i:s')."\n".
-                                "<i>Repository:</i> " . $response['package']['repository']."\n".
-                                '<code>composer require '.$response['package']['name'].'</code>'*/,
+                            'text' => PackagistAdapter::showPackage($response['package']),
                             'parse_mode' => 'HTML',
                             'disable_web_page_preview' => true
                         ]);
