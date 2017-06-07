@@ -91,8 +91,6 @@ if($update->has('inline_query')) {
         }
     } else {
         $params = [
-            'switch_pm_text' => 'Type the query...',
-            'switch_pm_parameter' => 'inline help'
         ];
     }
     try {
