@@ -97,7 +97,7 @@ if($update->has('inline_query')) {
     }
     try {
         $params['results'][] = InlineQueryResultArticle::make([
-            'id' => time(),
+            'id' => time()+"",
             'title' => 'bla',
             'message_text' => 'message',
             'description' => 'description',
