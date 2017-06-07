@@ -96,32 +96,6 @@ if($update->has('inline_query')) {
         ];
     }
     try {
-        
-        $data    = ['inline_query_id' => time().''];
-        $articles[]= [
-            [
-                'id'                    => '001',
-                'title'                 => 'https://core.telegram.org/bots/api#answerinlinequery',
-                'description'           => 'you enter: ',
-            ],
-            [
-                'id'                    => '002',
-                'title'                 => 'https://core.telegram.org/bots/api#answerinlinequery',
-                'description'           => 'you enter: ',
-            ],
-            [
-                'id'                    => '003',
-                'title'                 => 'https://core.telegram.org/bots/api#answerinlinequery',
-                'description'           => 'you enter: ',
-            ],
-        ];
-        $params['results'][] = InlineQueryResultArticle::make($articles);
-        return $telegram->answerInlineQuery($params);
-        
-        
-        
-        
-        
         $request =
         [
             'inline_query_id' => $inlineQuery->getId()
