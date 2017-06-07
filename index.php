@@ -96,14 +96,6 @@ if($update->has('inline_query')) {
         ];
     }
     try {
-        $params['results'][] = InlineQueryResultArticle::make([
-            'id' => time()."",
-            'title' => 'bla',
-            'message_text' => 'message',
-            'description' => 'description',
-            'parse_mode' => 'HTML',
-            'disable_web_page_preview' => true
-        ]);
         $request =
         [
             'inline_query_id' => $inlineQuery->getId()
